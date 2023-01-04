@@ -20,6 +20,7 @@ const params = program
     .option('--exportServices <value>', 'Write services to disk', true)
     .option('--exportModels <value>', 'Write models to disk', true)
     .option('--exportSchemas <value>', 'Write schemas to disk', false)
+    .option('--useDateType', 'Output Date instead of string for the format "date-time" in the models')
     .option('--indent <value>', 'Indentation options [4, 2, tabs]', '4')
     .option('--postfix <value>', 'Deprecated: Use --postfixServices instead. Service name postfix', 'Service')
     .option('--postfixServices <value>', 'Service name postfix', 'Service')
@@ -42,6 +43,7 @@ if (OpenAPI) {
         exportServices: JSON.parse(params.exportServices) === true,
         exportModels: JSON.parse(params.exportModels) === true,
         exportSchemas: JSON.parse(params.exportSchemas) === true,
+        useDateType: JSON.parse(params.useDateType) === true,
         indent: params.indent,
         postfixServices: params.postfixServices ?? params.postfix,
         postfixModels: params.postfixModels,

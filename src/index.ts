@@ -28,6 +28,7 @@ export type Options = {
     postfixModels?: string;
     request?: string;
     write?: boolean;
+    useDateType?: boolean;
 };
 
 /**
@@ -49,6 +50,7 @@ export type Options = {
  * @param postfixModels Model name postfix
  * @param request Path to custom request file
  * @param write Write the files to disk (true or false)
+ * @param useDateType: Output Date instead of string with format date-time
  */
 export const generate = async ({
     input,
@@ -66,6 +68,7 @@ export const generate = async ({
     postfixModels = '',
     request,
     write = true,
+    useDateType = false
 }: Options): Promise<void> => {
     const openApi = isString(input) ? await getOpenApiSpec(input) : input;
     const openApiVersion = getOpenApiVersion(openApi);
@@ -94,6 +97,7 @@ export const generate = async ({
                 indent,
                 postfixServices,
                 postfixModels,
+                useDateType,
                 clientName,
                 request
             );
@@ -118,6 +122,7 @@ export const generate = async ({
                 indent,
                 postfixServices,
                 postfixModels,
+                useDateType,
                 clientName,
                 request
             );

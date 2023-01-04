@@ -3,6 +3,7 @@ import { resolve } from 'path';
 import type { Client } from '../client/interfaces/Client';
 import type { HttpClient } from '../HttpClient';
 import type { Indent } from '../Indent';
+import { dateTypeOverride } from './dateTypeOverride';
 import { mkdir, rmdir } from './fileSystem';
 import { isDefined } from './isDefined';
 import { isSubDirectory } from './isSubdirectory';
@@ -31,6 +32,7 @@ import { writeClientServices } from './writeClientServices';
  * @param postfixServices Service name postfix
  * @param postfixModels Model name postfix
  * @param clientName Custom client class name
+ * @param useDateType Output Date instead of string with format date-time
  * @param request Path to custom request file
  */
 export const writeClient = async (
@@ -47,6 +49,7 @@ export const writeClient = async (
     indent: Indent,
     postfixServices: string,
     postfixModels: string,
+    useDateType: boolean,
     clientName?: string,
     request?: string
 ): Promise<void> => {
@@ -91,6 +94,9 @@ export const writeClient = async (
     if (exportModels) {
         await rmdir(outputPathModels);
         await mkdir(outputPathModels);
+        if (useDateType) {
+            client.models = dateTypeOverride(client.models);
+        }
         await writeClientModels(client.models, templates, outputPathModels, httpClient, useUnionTypes, indent);
     }
 
